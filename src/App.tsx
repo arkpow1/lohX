@@ -53,22 +53,56 @@ const Test2 = () => {
 };
 
 const Test3 = () => {
-  const store = useLohX("kek");
+  const [kekStore, testStore] = useLohX(["kek", "test"]);
+
   const rendersCountRef = React.useRef(0);
 
   rendersCountRef.current += 1;
 
   return (
     <div style={{ border: "2px solid white", padding: "12px 16px" }}>
-      <h3>This component using store "kek" </h3>
+      <h3>This component using store "kek" and store "test" </h3>
+      <p> count from LohX is {kekStore.count}</p>
+      <button
+        onClick={() => {
+          kekStore.count++;
+        }}
+      >
+        count++ in "kek"
+      </button>
+      <button
+        onClick={() => {
+          testStore.count++;
+        }}
+      >
+        count++ in "test"
+      </button>
+      <p>
+        Count of renders: <h2>{rendersCountRef.current}</h2>
+      </p>
+    </div>
+  );
+};
+
+const Test4 = () => {
+  const store = useLohX("kek");
+
+  const rendersCountRef = React.useRef(0);
+
+  rendersCountRef.current += 1;
+
+  return (
+    <div style={{ border: "2px solid white", padding: "12px 16px" }}>
+      <h3>This component using store "kek"</h3>
       <p> count from LohX is {store.count}</p>
       <button
         onClick={() => {
           store.count++;
         }}
       >
-        count++ in another store
+        count++ in "kek"
       </button>
+
       <p>
         Count of renders: <h2>{rendersCountRef.current}</h2>
       </p>
@@ -85,6 +119,7 @@ function App() {
       <Test />
       <Test2 />
       <Test3 />
+      <Test4 />
     </LohX>
   );
 }

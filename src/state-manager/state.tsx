@@ -4,14 +4,18 @@ import {
   createRecursiveContextSignature,
   createStoreSignature,
   timeoutsType,
-  useLohXSignature,
+  // useLohXSignature,
 } from "./types";
 
 const contextsMap = new Map();
 const storesMap = new Map();
 
-export const useLohX: useLohXSignature = (storeName) =>
-  React.useContext(contextsMap.get(storeName));
+export const useLohX = (storeName) => {
+  if (Array.isArray(storeName)) {
+    return storeName.map((name) => React.useContext(contextsMap.get(name)));
+  }
+  return React.useContext(contextsMap.get(storeName));
+};
 
 export const createStore: createStoreSignature = (name, store) => {
   if (!storesMap.has(name)) {

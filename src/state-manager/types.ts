@@ -3,7 +3,13 @@ export type createStoreSignature = (
   store: { [a: string]: any }
 ) => void;
 
-export type useLohXSignature = (storeName: string) => { [a: string]: any };
+export type useLohXSignature = (storeName: string | string[]) =>
+  | {
+      [a: string]: any;
+    }
+  | {
+      [a: string]: any;
+    }[];
 
 export type createRecursiveContextSignature = (
   contexts: [string, any][],
