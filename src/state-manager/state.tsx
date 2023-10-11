@@ -1,20 +1,30 @@
 import React from "react";
+import {
+  LohXProps,
+  createRecursiveContextSignature,
+  createStoreSignature,
+  timeoutsType,
+  useLohXSignature,
+} from "./types";
 
 const contextsMap = new Map();
 const storesMap = new Map();
 
-export const useLohX = (storeName) => {
-  return React.useContext(contextsMap.get(storeName));
-};
+export const useLohX: useLohXSignature = (storeName) =>
+  React.useContext(contextsMap.get(storeName));
 
-export const createStore = (name, store) => {
+export const createStore: createStoreSignature = (name, store) => {
   if (!storesMap.has(name)) {
     storesMap.set(name, store);
     contextsMap.set(name, React.createContext(null));
   }
 };
 
-const createRecursiveContext = (contexts, children, index = 0) => {
+const createRecursiveContext: createRecursiveContextSignature = (
+  contexts,
+  children,
+  index = 0
+) => {
   if (contexts.length === 0) {
     return children;
   }
@@ -29,21 +39,22 @@ const createRecursiveContext = (contexts, children, index = 0) => {
   );
 };
 
-export const LohX = ({ children }) => {
-  const [, setTrigger] = React.useState(false);
-  const timeouts = React.useRef<any[]>({});
+export const LohX = ({ children }: LohXProps) => {
+  const timeouts = React.useRef<timeoutsType>({});
   const isInitial = React.useRef(true);
 
+  const [, setTrigger] = React.useState(false);
+
   [...storesMap.entries()].forEach(([itemKey, itemValue]) => {
-    const makeProxy = (obj) => {
+    const makeProxy = (obj: { [key: string]: any }) => {
       return new Proxy(obj, {
         set: (target, key, value) => {
-          const entries = Object.entries(timeouts.current);
-          target[key] = value;
+          const timeoutsKeys = Object.keys(timeouts.current);
+          target[key as string] = value;
 
           clearTimeout(timeouts.current[itemKey]);
           timeouts.current[itemKey] = setTimeout(() => {
-            entries.forEach(([key, value]) => delete timeouts.current[key]);
+            timeoutsKeys.forEach((key) => delete timeouts.current[key]);
             storesMap.set(itemKey, makeProxy(itemValue));
 
             setTrigger((prev) => !prev);
