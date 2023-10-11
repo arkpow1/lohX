@@ -14,7 +14,7 @@ const Test = () => {
       count from LohX is {store.count}
       <button
         onClick={() => {
-          store.count += 1;
+          store.count++;
         }}
       >
         click
@@ -38,7 +38,7 @@ const Test2 = () => {
       count from LohX is {store.count}
       <button
         onClick={() => {
-          store.count += 1;
+          store.count++;
         }}
       >
         click
@@ -62,7 +62,7 @@ const Test3 = () => {
       count from LohX is {store.count}
       <button
         onClick={() => {
-          store.count += 1;
+          store.count++;
         }}
       >
         click
