@@ -10,18 +10,17 @@ const Test = () => {
 
   return (
     <div style={{ border: "2px solid white", padding: "12px 16px" }}>
-      <h3>This component using state "test" </h3>
-      count from LohX is {store.count}
+      <h3>This component using store "test" </h3>
+      <p> count from LohX is {store.count}</p>
+      <p> id from LohX is {store.id}</p>
       <button
         onClick={() => {
           store.count++;
         }}
       >
-        click
+        count++
       </button>
-      <p>
-        Count of renders: <h2>{rendersCountRef.current}</h2>
-      </p>
+      <p>Count of renders: {rendersCountRef.current}</p>
     </div>
   );
 };
@@ -34,18 +33,21 @@ const Test2 = () => {
 
   return (
     <div style={{ border: "2px solid white", padding: "12px 16px" }}>
-      <h3>This component using state "test" </h3>
-      count from LohX is {store.count}
+      <h3>This component using store "test" </h3>
+      <p> count from LohX is {store.count}</p>
+      <p> id from LohX is {store.id}</p>
       <button
         onClick={() => {
           store.count++;
+          store.count++;
+          store.count++;
+          store.count++;
+          store.id = crypto.randomUUID();
         }}
       >
-        click
+        (count++ 4 times and add id)
       </button>
-      <p>
-        Count of renders: <h2>{rendersCountRef.current}</h2>
-      </p>
+      <p>Count of renders: {rendersCountRef.current}</p>
     </div>
   );
 };
@@ -58,14 +60,14 @@ const Test3 = () => {
 
   return (
     <div style={{ border: "2px solid white", padding: "12px 16px" }}>
-      <h3>This component using state "kek" </h3>
-      count from LohX is {store.count}
+      <h3>This component using store "kek" </h3>
+      <p> count from LohX is {store.count}</p>
       <button
         onClick={() => {
           store.count++;
         }}
       >
-        click
+        count++ in another store
       </button>
       <p>
         Count of renders: <h2>{rendersCountRef.current}</h2>
@@ -74,7 +76,7 @@ const Test3 = () => {
   );
 };
 
-createStore("test", { count: 0 });
+createStore("test", { count: 0, id: null });
 createStore("kek", { count: 10000 });
 
 function App() {
