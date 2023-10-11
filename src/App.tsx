@@ -3,14 +3,14 @@ import "./App.css";
 import { LohX, createStore, useLohX } from "./state-manager";
 
 const Test = () => {
-  const store = useLohX("test");
+  const store = useLohX("second");
   const rendersCountRef = React.useRef(0);
 
   rendersCountRef.current += 1;
 
   return (
-    <div style={{ border: "2px solid white", padding: "12px 16px" }}>
-      <h3>This component using store "test" </h3>
+    <div className="card">
+      <h3>This component using store "second" </h3>
       <p> count from LohX is {store.count}</p>
       <p> id from LohX is {store.id}</p>
       <button
@@ -20,20 +20,22 @@ const Test = () => {
       >
         count++
       </button>
-      <p>Count of renders: {rendersCountRef.current}</p>
+      <p>
+        Count of renders: <h2>{rendersCountRef.current}</h2>
+      </p>
     </div>
   );
 };
 
 const Test2 = () => {
-  const store = useLohX("test");
+  const store = useLohX("second");
   const rendersCountRef = React.useRef(0);
 
   rendersCountRef.current += 1;
 
   return (
-    <div style={{ border: "2px solid white", padding: "12px 16px" }}>
-      <h3>This component using store "test" </h3>
+    <div className="card">
+      <h3>This component using store "second" </h3>
       <p> count from LohX is {store.count}</p>
       <p> id from LohX is {store.id}</p>
       <button
@@ -47,35 +49,37 @@ const Test2 = () => {
       >
         (count++ 4 times and add id)
       </button>
-      <p>Count of renders: {rendersCountRef.current}</p>
+      <p>
+        Count of renders: <h2>{rendersCountRef.current}</h2>
+      </p>
     </div>
   );
 };
 
 const Test3 = () => {
-  const [kekStore, testStore] = useLohX(["kek", "test"]);
+  const [firstStore, secondStore] = useLohX(["first", "second"]);
 
   const rendersCountRef = React.useRef(0);
 
   rendersCountRef.current += 1;
 
   return (
-    <div style={{ border: "2px solid white", padding: "12px 16px" }}>
-      <h3>This component using store "kek" and store "test" </h3>
-      <p> count from LohX is {kekStore.count}</p>
+    <div className="card">
+      <h3>This component using store "first" and store "second" </h3>
+      <p> count from LohX is {firstStore.count}</p>
       <button
         onClick={() => {
-          kekStore.count++;
+          firstStore.count++;
         }}
       >
-        count++ in "kek"
+        count++ in "first"
       </button>
       <button
         onClick={() => {
-          testStore.count++;
+          secondStore.count++;
         }}
       >
-        count++ in "test"
+        count++ in "second"
       </button>
       <p>
         Count of renders: <h2>{rendersCountRef.current}</h2>
@@ -85,24 +89,32 @@ const Test3 = () => {
 };
 
 const Test4 = () => {
-  const store = useLohX("kek");
+  const store = useLohX("first");
 
   const rendersCountRef = React.useRef(0);
 
   rendersCountRef.current += 1;
 
   return (
-    <div style={{ border: "2px solid white", padding: "12px 16px" }}>
-      <h3>This component using store "kek"</h3>
+    <div className="card">
+      <h3>This component using store "first"</h3>
       <p> count from LohX is {store.count}</p>
+      <p>second deep proxy, value is {store.demo.value}</p>
+      <button
+        onClick={() => {
+          // store.count++;
+          store.demo.value *= 2;
+        }}
+      >
+        change deep object value in "first"
+      </button>
       <button
         onClick={() => {
           store.count++;
         }}
       >
-        count++ in "kek"
+        count++ in "first"
       </button>
-
       <p>
         Count of renders: <h2>{rendersCountRef.current}</h2>
       </p>
@@ -110,8 +122,8 @@ const Test4 = () => {
   );
 };
 
-createStore("test", { count: 0, id: null });
-createStore("kek", { count: 10000 });
+createStore("second", { count: 0, id: null });
+createStore("first", { count: 10000, demo: { value: 2 } });
 
 function App() {
   return (

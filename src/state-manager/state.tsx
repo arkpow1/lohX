@@ -51,6 +51,12 @@ export const LohX = ({ children }: LohXProps) => {
 
   [...storesMap.entries()].forEach(([itemKey, itemValue]) => {
     const makeProxy = (obj: { [key: string]: any }) => {
+      for (const key in obj) {
+        if (obj[key] instanceof Object) {
+          obj[key] = makeProxy(obj[key]);
+        }
+      }
+
       return new Proxy(obj, {
         set: (target, key, value) => {
           const timeoutsKeys = Object.keys(timeouts.current);
