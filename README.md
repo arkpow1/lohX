@@ -1,4 +1,4 @@
-# LohX - my pet-project state manager
+# LohX - my pet-project state manager for React
 
 
 ### Installation
