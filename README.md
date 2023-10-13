@@ -1,7 +1,16 @@
-```npm i```
-```npm run dev```
+# LohX - my pet-project state manager
 
 
+### Installation
+
+```bash
+npm i
+```
+```bash
+npm run dev
+```
+
+### Usage
 * Wrap your app in the LohX component:
 ![image](https://github.com/arkpow1/lohX/assets/105483056/8977ed31-8ad2-4428-add6-0f8884fc5612)
 * Create a stores:
